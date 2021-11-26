@@ -95,7 +95,10 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
 
     private fun handleInput() {
         if (Gdx.input.justTouched()) {
-            if (bombs.size < maxBombs) bombs.add(Bomb(bomber.x, bomber.y))
+            if (bombs.size < maxBombs) {
+                val soundId = Assets.playSound(Assets.bombDrop)
+                bombs.add(Bomb(bomber.x, bomber.y, soundId))
+            }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) game.screen = MainMenuScreen(game)
     }
@@ -115,7 +118,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         var xMax: Float = bomber.x
         for (bb in bombs) xMax = max(xMax, bb.x)
 
-        checkBombCollisionWithSkyscrapers(xMax)
+        checkCollisionWithSkyscrapers(xMax)
         checkLevelComplete()
         updateBombs(delta)
         updateExplosions(delta)
@@ -148,7 +151,10 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         for (i in (bombs.size - 1) downTo 0) {
             val bb = bombs[i]
             bb.update(delta)
-            if (bb.shouldRemove()) bombs.removeIndex(i)
+            if (bb.shouldRemove()) {
+                Assets.stopSound(Assets.bombDrop, bb.soundId)
+                bombs.removeIndex(i)
+            }
         }
     }
 
@@ -167,7 +173,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         }
     }
 
-    private fun checkBombCollisionWithSkyscrapers(xMax: Float) {
+    private fun checkCollisionWithSkyscrapers(xMax: Float) {
         // Check for collisions with skyscrapers
         for (ss in skyscrapers) {
             // Don't check for collisions with skyscrapers ahead
@@ -190,6 +196,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
                     val adj: Float = SKYSCRAPER_WIDTH * 6 / 10f
                     explosions.add(Explosion(position.x, position.y - adj))
                     score += 1
+                    Assets.stopSound(Assets.bombDrop, bombs[j].soundId)
                     bombs.removeIndex(j)
                     if (ss.isDestroyed) {
                         skyscraperCount--
@@ -243,7 +250,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         private const val TAG = "GameScreen"
 
         /** Speed of the bomber at the start of the game. */
-        private const val BOMBER_START_SPEED = 500f
+        private const val BOMBER_START_SPEED = 10f
 
         /** Maximum number of skyscrapers generated. */
         private const val MAX_SKYSCRAPER_COUNT = 21

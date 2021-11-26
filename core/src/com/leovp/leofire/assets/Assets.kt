@@ -38,13 +38,14 @@ class Assets {
 
         lateinit var music: Music
         lateinit var explosionSound: Sound
+        lateinit var bombDrop: Sound
 
         private fun loadTexture(file: String): Texture = Texture(Gdx.files.internal(file))
         private fun loadAtlas(file: String): TextureAtlas = TextureAtlas(file)
 
-        fun playSound(sound: Sound) {
-            sound.play(1f)
-        }
+        fun playSound(sound: Sound, vol: Float = 1f): Long = sound.play(vol)
+
+        fun stopSound(sound: Sound, soundId: Long = -1) = if (soundId > -1) sound.stop(soundId) else sound.stop()
     }
 
     val manager = AssetManager()
@@ -76,7 +77,8 @@ class Assets {
         manager.finishLoading()
 
         menuBg = manager.get("menubg.png", Texture::class.java)
-        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3")).apply {
+//        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3")).apply {
+        music = manager.get("music.mp3", Music::class.java).apply {
             isLooping = true
             volume = 0.5f
             play()
@@ -95,6 +97,7 @@ class Assets {
         manager.load("hud-bomber.png", Texture::class.java)
         manager.load("hud-bomb.png", Texture::class.java)
         manager.load("explosion.mp3", Sound::class.java)
+        manager.load("drop_bomb.mp3", Sound::class.java)
     }
 
     fun loadGameScreenAssets() {
@@ -105,7 +108,10 @@ class Assets {
         explosionTexture = TextureRegion.split(manager.get("explosion.png"), 128, 128)[0]
         hudBomberTexture = manager.get("hud-bomber.png", Texture::class.java)
         hudBombTexture = manager.get("hud-bomb.png", Texture::class.java)
-        explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.mp3"))
+//        explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.mp3"))
+//        bombDrop = Gdx.audio.newSound(Gdx.files.internal("drop_bomb.mp3"))
+        explosionSound = manager.get("explosion.mp3", Sound::class.java)
+        bombDrop = manager.get("drop_bomb.mp3", Sound::class.java)
     }
 
     fun dispose() {

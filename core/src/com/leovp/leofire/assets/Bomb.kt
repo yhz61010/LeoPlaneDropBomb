@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.leovp.leofire.framework.DynamicGameObject
 
-class Bomb(x: Float, y: Float) : DynamicGameObject(
+class Bomb(x: Float, y: Float, var soundId: Long = -1) : DynamicGameObject(
     x, y,
     Assets.bombTexture[0].regionWidth * SCALE, Assets.bombTexture[0].regionHeight * SCALE
 ) {

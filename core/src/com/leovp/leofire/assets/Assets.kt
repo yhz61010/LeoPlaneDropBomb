@@ -75,12 +75,12 @@ class Assets {
         fontNormal = BitmapFont()
         font36 = BitmapFont(Gdx.files.internal("font36.fnt"), Gdx.files.internal("font36.png"), false)
         font72 = BitmapFont(Gdx.files.internal("font72.fnt"), Gdx.files.internal("font72.png"), false)
-        manager.load("menubg.png", Texture::class.java)
+        manager.load("gamebg.png", Texture::class.java)
         manager.load("music.mp3", Music::class.java)
         // Block until all the assets that have been queued are actually done loading.
         manager.finishLoading()
 
-        menuBg = manager.get("menubg.png", Texture::class.java)
+        menuBg = manager.get("gamebg.png", Texture::class.java)
 //        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3")).apply {
         music = manager.get("music.mp3", Music::class.java).apply {
             isLooping = true

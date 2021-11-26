@@ -26,7 +26,7 @@ class MainMenuScreen(game: LeoFire) : LeoScreen(game, game.batch) {
     private val gameStartLabel: Label
     private val loadingLabel: Label
 
-    private var bg: Background = Background(Assets.menuBg, 0.1f, 0.5f)
+    private var bg: Background = Background(Assets.menuBg, 0.2f, 0.5f)
 
     init {
         val labelNavyStyle = Label.LabelStyle(Assets.font72, Color.NAVY)

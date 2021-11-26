@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Array
 import com.leovp.leofire.LeoFire
 import com.leovp.leofire.assets.*
 import com.leovp.leofire.framework.LeoScreen
-import com.leovp.leofire.framework.utils.humanReadableByteCount
 import com.leovp.leofire.gfx.Background
 import kotlin.math.max
 import kotlin.math.min
@@ -189,7 +188,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
                 if (ss.isDestroyed) skyscraperCount--
             }
             for (j in bombs.size - 1 downTo 0) {
-                // bomb hit
+                // Bomb hit
                 if (ss.checkCollision(bombs[j].bounds)) {
                     Assets.playSound(Assets.explosionSound)
                     val position: Vector2 = bombs[j].position
@@ -213,7 +212,6 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
     }
 
     override fun drawForBlending() {
-        if (LeoFire.DEBUG) renderDebugInfo()
         for (ss in skyscrapers) ss.render(batch)
         bomber.render(batch)
         for (bb in bombs) bb.render(batch)
@@ -230,15 +228,6 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         bomber.drawShapeRenderer(game.camera.combined)
         for (bb in bombs) bb.drawShapeRenderer(game.camera.combined)
         for (e in explosions) e.drawShapeRenderer(game.camera.combined, Color(1f, 0f, 0f, 0f))
-    }
-
-    private fun renderDebugInfo() {
-        val debugInfo = String.format(
-            "FPS=%d Sprites=%d\nrenderCalls=%d totalRenderCalls=%d\njavaHeap=%s nativeHeap=%s",
-            Gdx.graphics.framesPerSecond, game.batch.maxSpritesInBatch, game.batch.renderCalls, game.batch.totalRenderCalls,
-            Gdx.app.javaHeap.humanReadableByteCount(), Gdx.app.nativeHeap.humanReadableByteCount()
-        )
-        Assets.font72.draw(batch, debugInfo, 10f, game.camera.viewportHeight - 10)
     }
 
     override fun resize(width: Int, height: Int) {

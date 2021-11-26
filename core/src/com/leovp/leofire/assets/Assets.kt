@@ -28,6 +28,7 @@ class Assets {
     companion object {
         lateinit var font36: BitmapFont
         lateinit var font72: BitmapFont
+        lateinit var font: BitmapFont
 
         lateinit var menuBg: Texture
         lateinit var gameBg: Texture
@@ -74,6 +75,7 @@ class Assets {
     fun loadMainMenuScreenAssets() {
         font36 = BitmapFont(Gdx.files.internal("font36.fnt"), Gdx.files.internal("font36.png"), false)
         font72 = BitmapFont(Gdx.files.internal("font72.fnt"), Gdx.files.internal("font72.png"), false)
+        font = BitmapFont()
         manager.load("gamebg.png", Texture::class.java)
         manager.load("music.mp3", Music::class.java)
         // Block until all the assets that have been queued are actually done loading.
@@ -122,6 +124,7 @@ class Assets {
 //        if (AssetsManager::playerIdleAttackAtlas.isInitialized) playerIdleAttackAtlas.dispose()
         font36.dispose()
         font72.dispose()
+        font.dispose()
         manager.dispose()
     }
 }

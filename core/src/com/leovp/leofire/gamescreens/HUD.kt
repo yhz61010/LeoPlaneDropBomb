@@ -36,15 +36,15 @@ class HUD(private val sb: SpriteBatch) : Disposable {
 
     init {
         // labels
-        val labelStyle = LabelStyle(Assets.font36, Color.WHITE)
+        val labelStyle = LabelStyle(Assets.font36, Color.BLACK)
         levelLabel = Label(String.format(Locale.US, levelFormat, 1), labelStyle)
         scoreLabel = Label(String.format(Locale.US, scoreFormat, 0), labelStyle)
 
         // table to organize all the labels
         val table = Table().top()
         table.setFillParent(true)
-        table.add(levelLabel).expandX().padTop(10f)
-        table.add(scoreLabel).expandX().padTop(10f)
+        table.add(levelLabel).expandX().padTop(0f)
+        table.add(scoreLabel).expandX().padTop(0f)
 
         // stage
         stage = Stage(ScreenViewport(OrthographicCamera()), sb).apply { addActor(table) }

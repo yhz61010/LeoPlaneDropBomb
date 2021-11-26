@@ -21,7 +21,7 @@ import com.leovp.leofire.gfx.Background
 class MainMenuScreen(game: LeoFire) : LeoScreen(game, game.batch) {
     override fun getTagName() = TAG
 
-    private val stage: Stage
+    private val mainMenuStage: Stage
     private val gameNameLabel: Label
     private val gameStartLabel: Label
     private val loadingLabel: Label
@@ -46,7 +46,7 @@ class MainMenuScreen(game: LeoFire) : LeoScreen(game, game.batch) {
             setSize(Gdx.graphics.width * 1f, Gdx.graphics.height * 0.2f)
             setPosition(0f, 0f)
         }
-        stage = Stage(ScreenViewport(OrthographicCamera()), batch).apply {
+        mainMenuStage = Stage(ScreenViewport(OrthographicCamera()), batch).apply {
             addActor(gameNameLabel)
             addActor(gameStartLabel)
             addActor(loadingLabel)
@@ -90,17 +90,17 @@ class MainMenuScreen(game: LeoFire) : LeoScreen(game, game.batch) {
     }
 
     override fun drawWithoutBatchAround() {
-        stage.draw()
+        mainMenuStage.draw()
     }
 
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
-        stage.viewport.update(width, height, true)
+        mainMenuStage.viewport.update(width, height, true)
     }
 
     override fun dispose() {
         super.dispose()
-        stage.dispose()
+        mainMenuStage.dispose()
     }
 
     companion object {

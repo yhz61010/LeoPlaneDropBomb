@@ -36,7 +36,7 @@ class HUD(private val sb: SpriteBatch) : Disposable {
 
     init {
         // labels
-        val labelStyle = LabelStyle(Assets.fontNormal, Color.WHITE)
+        val labelStyle = LabelStyle(Assets.font36, Color.WHITE)
         levelLabel = Label(String.format(Locale.US, levelFormat, 1), labelStyle)
         scoreLabel = Label(String.format(Locale.US, scoreFormat, 0), labelStyle)
 
@@ -69,10 +69,10 @@ class HUD(private val sb: SpriteBatch) : Disposable {
     fun render() {
         sb.projectionMatrix = stage.camera.combined
         sb.begin()
-        var x = 20f
+        var x = 60f
         val y = stage.height - 35
         for (i in 0 until availableLives) sb.draw(bomber, x + 45 * i, y, 104f / 3, 57f / 3)
-        x = stage.width - 100
+        x = stage.width - 140
         for (i in 0 until availableBombs) sb.draw(bomb, x + 15 * i, y, 12f, 20f)
         sb.end()
         stage.viewport.apply()

@@ -27,7 +27,6 @@ class Assets {
     companion object {
         lateinit var font36: BitmapFont
         lateinit var font72: BitmapFont
-        lateinit var fontNormal: BitmapFont
 
         lateinit var menuBg: Texture
         lateinit var gameBg: Texture
@@ -72,7 +71,6 @@ class Assets {
      * Other assets should be loaded when [Loading Screen] are displayed.
      */
     fun loadMainMenuScreenAssets() {
-        fontNormal = BitmapFont()
         font36 = BitmapFont(Gdx.files.internal("font36.fnt"), Gdx.files.internal("font36.png"), false)
         font72 = BitmapFont(Gdx.files.internal("font72.fnt"), Gdx.files.internal("font72.png"), false)
         manager.load("gamebg.png", Texture::class.java)
@@ -121,7 +119,6 @@ class Assets {
     fun dispose() {
 //        if (AssetsManager::playerWalkRunAtlas.isInitialized) playerWalkRunAtlas.dispose()
 //        if (AssetsManager::playerIdleAttackAtlas.isInitialized) playerIdleAttackAtlas.dispose()
-        fontNormal.dispose()
         font36.dispose()
         font72.dispose()
         manager.dispose()

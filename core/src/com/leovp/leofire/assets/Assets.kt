@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
  * Date: 2021/11/17 10:05
  *
  * https://github.com/libgdx/libgdx/wiki/Managing-your-assets
+ * https://github.com/libgdx/libgdx/wiki/Textures%2C-textureregion-and-spritebatch
  */
 class Assets {
 //    private lateinit var playerWalkRunAtlas: TextureAtlas

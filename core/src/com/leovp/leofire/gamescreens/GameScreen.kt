@@ -71,7 +71,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         hud.setLevel(level)
         skyscrapers.clear()
         skyscraperCount = min(3 + level * 2, MAX_SKYSCRAPER_COUNT)
-        val skyscraperGap: Float = (camera.viewportWidth - skyscraperCount * SKYSCRAPER_WIDTH) / (skyscraperCount + 1)
+        val skyscraperGap: Float = (game.camera.viewportWidth - skyscraperCount * SKYSCRAPER_WIDTH) / (skyscraperCount + 1)
         val fixedSkyscraperPos: Float = skyscraperGap + SKYSCRAPER_WIDTH
         val skyscraperMaxFloors = 1 + 2 * level
         Gdx.app.log(TAG, "skyscraperCount=$skyscraperCount skyscraperMaxFloors=$skyscraperMaxFloors")
@@ -83,7 +83,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         }
 
         bombs.clear()
-        bomber.setPosition(0f, camera.viewportHeight - bomber.bounds.height - 9)
+        bomber.setPosition(0f, game.camera.viewportHeight - bomber.bounds.height - 9)
         bomber.setSpeed(BOMBER_START_SPEED + level * 5, 0f)
 
         if (level > 3) {
@@ -109,7 +109,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         bomber.update(delta)
 
 //        Gdx.app.log(TAG, "bomber.x=${bomber.x} camera.viewportWidth=${camera.viewportWidth}")
-        if (bomber.x > camera.viewportWidth) {
+        if (bomber.x > game.camera.viewportWidth) {
             bomber.moveDown()
             bonus -= LEVEL_BONUS_DROP
             if (bonus < 0) bonus = 0
@@ -162,8 +162,8 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         // level completed
         if (skyscraperCount == 0) {
             bomber.moveOffscreen()
-            if (bomber.x > camera.viewportWidth - 10 ||
-                bomber.y > camera.viewportHeight
+            if (bomber.x > game.camera.viewportWidth - 10 ||
+                bomber.y > game.camera.viewportHeight
             ) {
                 score += bonus * level
                 hud.setScore(score)
@@ -226,10 +226,10 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
     }
 
     override fun drawShapeRenderer() {
-        for (ss in skyscrapers) ss.drawShapeRenderer(camera.combined)
-        bomber.drawShapeRenderer(camera.combined)
-        for (bb in bombs) bb.drawShapeRenderer(camera.combined)
-        for (e in explosions) e.drawShapeRenderer(camera.combined, Color(1f, 0f, 0f, 0f))
+        for (ss in skyscrapers) ss.drawShapeRenderer(game.camera.combined)
+        bomber.drawShapeRenderer(game.camera.combined)
+        for (bb in bombs) bb.drawShapeRenderer(game.camera.combined)
+        for (e in explosions) e.drawShapeRenderer(game.camera.combined, Color(1f, 0f, 0f, 0f))
     }
 
     private fun renderDebugInfo() {
@@ -238,7 +238,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
             Gdx.graphics.framesPerSecond, game.batch.maxSpritesInBatch, game.batch.renderCalls, game.batch.totalRenderCalls,
             Gdx.app.javaHeap.humanReadableByteCount(), Gdx.app.nativeHeap.humanReadableByteCount()
         )
-        Assets.font72.draw(batch, debugInfo, 10f, camera.viewportHeight - 10)
+        Assets.font72.draw(batch, debugInfo, 10f, game.camera.viewportHeight - 10)
     }
 
     override fun resize(width: Int, height: Int) {

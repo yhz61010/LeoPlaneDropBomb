@@ -3,7 +3,10 @@ package com.leovp.leofire
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.utils.viewport.FitViewport
+import com.badlogic.gdx.utils.viewport.Viewport
 import com.leovp.leofire.assets.Assets
 import com.leovp.leofire.gamescreens.MainMenuScreen
 
@@ -11,7 +14,16 @@ class LeoFire : Game() {
     lateinit var batch: SpriteBatch
     lateinit var assets: Assets
 
+    /** Active camera. */
+    lateinit var camera: OrthographicCamera
+
+    /** Game viewport. */
+    lateinit var viewport: Viewport
+
     override fun create() {
+        camera = OrthographicCamera().apply { setToOrtho(false, World.WORLD_WIDTH, World.WORLD_HEIGHT) }
+        viewport = FitViewport(World.WORLD_WIDTH, World.WORLD_HEIGHT, camera).apply { apply(true) }
+
         batch = SpriteBatch()
         // use LibGDX's default Arial font
 
@@ -28,6 +40,11 @@ class LeoFire : Game() {
             glClear(GL20.GL_COLOR_BUFFER_BIT)
         }
         super.render()
+    }
+
+    override fun resize(width: Int, height: Int) {
+        super.resize(width, height)
+        viewport.update(width, height)
     }
 
     override fun dispose() {

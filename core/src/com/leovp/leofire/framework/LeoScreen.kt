@@ -2,13 +2,9 @@ package com.leovp.leofire.framework
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
-import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
-import com.badlogic.gdx.utils.viewport.FitViewport
-import com.badlogic.gdx.utils.viewport.Viewport
 import com.leovp.leofire.LeoFire
-import com.leovp.leofire.World
 
 /**
  * Author: Michael Leo
@@ -19,10 +15,10 @@ abstract class LeoScreen(protected val game: LeoFire, protected val batch: Sprit
     private val tag: String by lazy { getTagName() }
 
     /** Active camera. */
-    protected var camera: OrthographicCamera = OrthographicCamera().apply { setToOrtho(false, World.WORLD_WIDTH, World.WORLD_HEIGHT) }
+//    protected var camera: OrthographicCamera = OrthographicCamera().apply { setToOrtho(false, World.WORLD_WIDTH, World.WORLD_HEIGHT) }
 
     /** Game viewport. */
-    private val viewport: Viewport by lazy { FitViewport(World.WORLD_WIDTH, World.WORLD_HEIGHT, camera).apply { apply(true) } }
+//    private val viewport: Viewport by lazy { FitViewport(World.WORLD_WIDTH, World.WORLD_HEIGHT, camera).apply { apply(true) } }
 
     /** Update logic */
     protected abstract fun update(delta: Float)
@@ -36,8 +32,8 @@ abstract class LeoScreen(protected val game: LeoFire, protected val batch: Sprit
 
         // clear the screen
         ScreenUtils.clear(0f, 0f, 0f, 1f)
-        camera.update()
-        batch.projectionMatrix = camera.combined
+        game.camera.update()
+        batch.projectionMatrix = game.camera.combined
 
         batch.disableBlending()
         batch.begin()
@@ -76,6 +72,6 @@ abstract class LeoScreen(protected val game: LeoFire, protected val batch: Sprit
 
     override fun resize(width: Int, height: Int) {
         Gdx.app.log(tag, "=====> resize($width, $height) <=====")
-        viewport.update(width, height)
+        game.viewport.update(width, height)
     }
 }

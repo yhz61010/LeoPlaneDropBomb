@@ -19,6 +19,8 @@ import kotlin.math.min
  * Date: 2021/11/16 17:43
  */
 class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
+    override fun getTagName() = TAG
+
     private var level = 1
 
     /** Maximum number of bombs active at the same time. */
@@ -241,7 +243,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         private const val TAG = "GameScreen"
 
         /** Speed of the bomber at the start of the game. */
-        private const val BOMBER_START_SPEED = 10f
+        private const val BOMBER_START_SPEED = 500f
 
         /** Maximum number of skyscrapers generated. */
         private const val MAX_SKYSCRAPER_COUNT = 21

@@ -18,6 +18,8 @@ import com.leovp.leofire.gfx.Font
 import java.util.*
 
 class GameOverScreen(game: LeoFire, score: Int) : LeoScreen(game, game.batch) {
+    override fun getTagName() = TAG
+
     /** Scene graph for the game over state. */
     private val stage: Stage
 
@@ -25,7 +27,7 @@ class GameOverScreen(game: LeoFire, score: Int) : LeoScreen(game, game.batch) {
     private val background: Background = Background(Assets.gameBg, 0.15f, 0.5f)
 
     init {
-        val labelStyle = LabelStyle(Font(42).font, Color.WHITE)
+        val labelStyle = LabelStyle(Font(42).font, Color.SKY)
         // table to organize all the labels
         val table = Table().apply {
             setFillParent(true)
@@ -51,7 +53,7 @@ class GameOverScreen(game: LeoFire, score: Int) : LeoScreen(game, game.batch) {
         background.update(delta)
     }
 
-    override fun drawForBlending() {
+    override fun drawWithoutBatchAround() {
         stage.draw()
     }
 
@@ -62,5 +64,9 @@ class GameOverScreen(game: LeoFire, score: Int) : LeoScreen(game, game.batch) {
     override fun dispose() {
         super.dispose()
         stage.dispose()
+    }
+
+    companion object {
+        private const val TAG = "GameOver"
     }
 }

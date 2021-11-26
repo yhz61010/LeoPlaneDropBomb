@@ -9,17 +9,17 @@ import com.leovp.leofire.gamescreens.MainMenuScreen
 
 class LeoFire : Game() {
     lateinit var batch: SpriteBatch
-    private lateinit var assets: Assets
+    lateinit var assets: Assets
 
     override fun create() {
         batch = SpriteBatch()
         // use LibGDX's default Arial font
 
         assets = Assets()
-        assets.getMenuBg()
+        Gdx.app.log(TAG, "Loading MainMenuScreen assets...")
+        assets.loadMainMenuScreenAssets()
         Gdx.app.log(TAG, "Prepare to goto MainMenuScreen")
         setScreen(MainMenuScreen(this))
-        assets.finishLoading()
     }
 
     override fun render() {

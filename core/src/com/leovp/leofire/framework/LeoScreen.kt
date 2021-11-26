@@ -1,6 +1,7 @@
 package com.leovp.leofire.framework
 
-import com.badlogic.gdx.ScreenAdapter
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.ScreenUtils
@@ -13,7 +14,9 @@ import com.leovp.leofire.World
  * Author: Michael Leo
  * Date: 2021/11/22 13:30
  */
-abstract class LeoScreen(protected val game: LeoFire, protected val batch: SpriteBatch) : ScreenAdapter() {
+abstract class LeoScreen(protected val game: LeoFire, protected val batch: SpriteBatch) : Screen { // or implements ScreenAdapter
+    abstract fun getTagName(): String
+    private val tag: String by lazy { getTagName() }
 
     /** Active camera. */
     protected var camera: OrthographicCamera = OrthographicCamera().apply { setToOrtho(false, World.WORLD_WIDTH, World.WORLD_HEIGHT) }
@@ -51,7 +54,28 @@ abstract class LeoScreen(protected val game: LeoFire, protected val batch: Sprit
         if (LeoFire.DEBUG) drawShapeRenderer()
     }
 
+    override fun show() {
+        Gdx.app.log(tag, "=====> show() <=====")
+    }
+
+    override fun pause() {
+        Gdx.app.log(tag, "=====> pause() <=====")
+    }
+
+    override fun resume() {
+        Gdx.app.log(tag, "=====> resume() <=====")
+    }
+
+    override fun hide() {
+        Gdx.app.log(tag, "=====> hide() <=====")
+    }
+
+    override fun dispose() {
+        Gdx.app.log(tag, "=====> dispose() <=====")
+    }
+
     override fun resize(width: Int, height: Int) {
+        Gdx.app.log(tag, "=====> resize($width, $height) <=====")
         viewport.update(width, height)
     }
 }

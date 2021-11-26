@@ -238,7 +238,7 @@ class GameScreen(game: LeoFire) : LeoScreen(game, game.batch) {
             Gdx.graphics.framesPerSecond, game.batch.maxSpritesInBatch, game.batch.renderCalls, game.batch.totalRenderCalls,
             Gdx.app.javaHeap.humanReadableByteCount(), Gdx.app.nativeHeap.humanReadableByteCount()
         )
-        Assets.font.draw(batch, debugInfo, 10f, camera.viewportHeight - 10)
+        Assets.font72.draw(batch, debugInfo, 10f, camera.viewportHeight - 10)
     }
 
     override fun resize(width: Int, height: Int) {

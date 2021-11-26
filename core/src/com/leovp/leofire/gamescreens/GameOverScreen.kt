@@ -14,7 +14,6 @@ import com.leovp.leofire.World
 import com.leovp.leofire.assets.Assets
 import com.leovp.leofire.framework.LeoScreen
 import com.leovp.leofire.gfx.Background
-import com.leovp.leofire.gfx.Font
 import java.util.*
 
 class GameOverScreen(game: LeoFire, score: Int) : LeoScreen(game, game.batch) {
@@ -27,7 +26,7 @@ class GameOverScreen(game: LeoFire, score: Int) : LeoScreen(game, game.batch) {
     private val background: Background = Background(Assets.gameBg, 0.15f, 0.5f)
 
     init {
-        val labelStyle = LabelStyle(Font(42).font, Color.SKY)
+        val labelStyle = LabelStyle(Assets.font72, Color.SKY)
         // table to organize all the labels
         val table = Table().apply {
             setFillParent(true)

@@ -25,7 +25,9 @@ class Assets {
 //    lateinit var playerAttack: Animation<AtlasRegion>
 
     companion object {
-        lateinit var font: BitmapFont
+        lateinit var font36: BitmapFont
+        lateinit var font72: BitmapFont
+        lateinit var fontNormal: BitmapFont
 
         lateinit var menuBg: Texture
         lateinit var gameBg: Texture
@@ -40,8 +42,8 @@ class Assets {
         lateinit var explosionSound: Sound
         lateinit var bombDrop: Sound
 
-        private fun loadTexture(file: String): Texture = Texture(Gdx.files.internal(file))
-        private fun loadAtlas(file: String): TextureAtlas = TextureAtlas(file)
+        fun loadTexture(file: String): Texture = Texture(Gdx.files.internal(file))
+        fun loadAtlas(file: String): TextureAtlas = TextureAtlas(file)
 
         fun playSound(sound: Sound, vol: Float = 1f): Long = sound.play(vol)
 
@@ -70,7 +72,9 @@ class Assets {
      * Other assets should be loaded when [Loading Screen] are displayed.
      */
     fun loadMainMenuScreenAssets() {
-        font = com.leovp.leofire.gfx.Font(6).font
+        fontNormal = BitmapFont()
+        font36 = BitmapFont(Gdx.files.internal("font36.fnt"), Gdx.files.internal("font36.png"), false)
+        font72 = BitmapFont(Gdx.files.internal("font72.fnt"), Gdx.files.internal("font72.png"), false)
         manager.load("menubg.png", Texture::class.java)
         manager.load("music.mp3", Music::class.java)
         // Block until all the assets that have been queued are actually done loading.
@@ -117,7 +121,9 @@ class Assets {
     fun dispose() {
 //        if (AssetsManager::playerWalkRunAtlas.isInitialized) playerWalkRunAtlas.dispose()
 //        if (AssetsManager::playerIdleAttackAtlas.isInitialized) playerIdleAttackAtlas.dispose()
-        font.dispose()
+        fontNormal.dispose()
+        font36.dispose()
+        font72.dispose()
         manager.dispose()
     }
 }

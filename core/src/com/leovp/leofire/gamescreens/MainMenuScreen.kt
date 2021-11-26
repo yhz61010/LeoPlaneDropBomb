@@ -3,12 +3,16 @@ package com.leovp.leofire.gamescreens
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.g2d.GlyphLayout
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.ui.Label
+import com.badlogic.gdx.utils.Align
+import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.leovp.leofire.LeoFire
 import com.leovp.leofire.assets.Assets
 import com.leovp.leofire.framework.LeoScreen
+import com.leovp.leofire.framework.utils.round
 import com.leovp.leofire.gfx.Background
-import com.leovp.leofire.gfx.Font
 
 /**
  * Author: Michael Leo
@@ -17,24 +21,36 @@ import com.leovp.leofire.gfx.Font
 class MainMenuScreen(game: LeoFire) : LeoScreen(game, game.batch) {
     override fun getTagName() = TAG
 
+    private val stage: Stage
+    private val gameNameLabel: Label
+    private val gameStartLabel: Label
+    private val loadingLabel: Label
+
     private var bg: Background = Background(Assets.menuBg, 0.1f, 0.5f)
 
-    private val glyphLayout = GlyphLayout()
-    private val font1 = Font(15).font.apply { color = Color.NAVY }
-    private val font2 = Font(10).font.apply { color = Color.ROYAL }
-    private val font3 = Font(8).font.apply { color = Color.ROYAL }
-    private var gameNamePosX = 0f
-    private var startGameTextPosX = 0f
-    private var loadingTextPosX = 0f
-
     init {
-        glyphLayout.setText(font1, GAME_NAME)
-        val gameNameFontWidth: Float = glyphLayout.width
-        gameNamePosX = (camera.viewportWidth - gameNameFontWidth) / 2
-
-        glyphLayout.setText(font2, TEXT_START_GAME)
-        val startGameFontWidth: Float = glyphLayout.width
-        startGameTextPosX = (camera.viewportWidth - startGameFontWidth) / 2
+        val labelNavyStyle = Label.LabelStyle(Assets.font72, Color.NAVY)
+        val labelRoyalStyle = Label.LabelStyle(Assets.font36, Color.ROYAL)
+        gameNameLabel = Label(GAME_NAME, labelNavyStyle).apply {
+            setAlignment(Align.center)
+            setSize(Gdx.graphics.width * 1f, Gdx.graphics.height * 1f)
+            setPosition(0f, 0f)
+        }
+        gameStartLabel = Label(TEXT_START_GAME, labelRoyalStyle).apply {
+            setAlignment(Align.center)
+            setSize(Gdx.graphics.width * 1f, Gdx.graphics.height * 0.45f)
+            setPosition(0f, 0f)
+        }
+        loadingLabel = Label("0%", labelRoyalStyle).apply {
+            setAlignment(Align.center)
+            setSize(Gdx.graphics.width * 1f, Gdx.graphics.height * 0.2f)
+            setPosition(0f, 0f)
+        }
+        stage = Stage(ScreenViewport(OrthographicCamera()), batch).apply {
+            addActor(gameNameLabel)
+            addActor(gameStartLabel)
+            addActor(loadingLabel)
+        }
     }
 
     override fun show() {
@@ -61,15 +77,11 @@ class MainMenuScreen(game: LeoFire) : LeoScreen(game, game.batch) {
     }
 
     override fun drawForBlending() {
-        font1.draw(batch, GAME_NAME, gameNamePosX, camera.viewportHeight - camera.viewportHeight * 0.3f)
-        font2.draw(batch, TEXT_START_GAME, startGameTextPosX, camera.viewportHeight * 0.3f)
-
-        val loadingProgress = game.assets.manager.progress
+        val loadingProgress = game.assets.manager.progress.round()
         if (loadingProgress < 1f) {
-            val loadingProgressStr = "${loadingProgress * 100}%"
-            glyphLayout.setText(font3, loadingProgressStr)
-            loadingTextPosX = (camera.viewportWidth - glyphLayout.width) / 2
-            font3.draw(batch, loadingProgressStr, loadingTextPosX, camera.viewportHeight * 0.15f)
+            loadingLabel.setText("${loadingProgress * 100}%")
+        } else {
+            loadingLabel.remove()
         }
     }
 
@@ -77,10 +89,18 @@ class MainMenuScreen(game: LeoFire) : LeoScreen(game, game.batch) {
         bg.render(batch)
     }
 
+    override fun drawWithoutBatchAround() {
+        stage.draw()
+    }
+
+    override fun resize(width: Int, height: Int) {
+        super.resize(width, height)
+        stage.viewport.update(width, height, true)
+    }
+
     override fun dispose() {
         super.dispose()
-        font1.dispose()
-        font2.dispose()
+        stage.dispose()
     }
 
     companion object {

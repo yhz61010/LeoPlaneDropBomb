@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.leovp.leofire.assets.Assets
-import com.leovp.leofire.gfx.Font
 import java.util.*
 
 class HUD(private val sb: SpriteBatch) : Disposable {
@@ -37,7 +36,7 @@ class HUD(private val sb: SpriteBatch) : Disposable {
 
     init {
         // labels
-        val labelStyle = LabelStyle(Font(26).font, Color.WHITE)
+        val labelStyle = LabelStyle(Assets.fontNormal, Color.WHITE)
         levelLabel = Label(String.format(Locale.US, levelFormat, 1), labelStyle)
         scoreLabel = Label(String.format(Locale.US, scoreFormat, 0), labelStyle)
 

@@ -1,21 +1,23 @@
-package com.leovp.leofire;
+package com.leovp.leofire
 
-import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
-import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
+import com.badlogic.gdx.backends.iosrobovm.IOSApplication
+import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration
+import com.leovp.leofire.IOSLauncher
+import org.robovm.apple.foundation.NSAutoreleasePool
+import org.robovm.apple.uikit.UIApplication
 
-import org.robovm.apple.foundation.NSAutoreleasePool;
-import org.robovm.apple.uikit.UIApplication;
-
-public class IOSLauncher extends IOSApplication.Delegate {
-    @Override
-    protected IOSApplication createApplication() {
-        IOSApplicationConfiguration config = new IOSApplicationConfiguration();
-        return new IOSApplication(new LeoFire(), config);
+class IOSLauncher : IOSApplication.Delegate() {
+    override fun createApplication(): IOSApplication {
+        val config = IOSApplicationConfiguration()
+        return IOSApplication(LeoFire(), config)
     }
 
-    public static void main(String[] argv) {
-        NSAutoreleasePool pool = new NSAutoreleasePool();
-        UIApplication.main(argv, null, IOSLauncher.class);
-        pool.close();
+    companion object {
+        @JvmStatic
+        fun main(argv: Array<String>) {
+            val pool = NSAutoreleasePool()
+            UIApplication.main<UIApplication, IOSLauncher>(argv, null, IOSLauncher::class.java)
+            pool.close()
+        }
     }
 }

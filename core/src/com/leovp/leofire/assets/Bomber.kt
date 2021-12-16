@@ -2,7 +2,7 @@ package com.leovp.leofire.assets
 
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.leovp.leofire.framework.DynamicGameObject
 
 class Bomber(x: Float, y: Float, speed: Float) : DynamicGameObject(
@@ -10,7 +10,7 @@ class Bomber(x: Float, y: Float, speed: Float) : DynamicGameObject(
     Assets.bomberTexture[0].regionWidth * SCALE, Assets.bomberTexture[0].regionHeight * SCALE
 ) {
     /** Animation representing the bomber. */
-    private val animation: Animation<TextureRegion> = Animation(0.25f, *Assets.bomberTexture).apply { playMode = Animation.PlayMode.LOOP }
+    private val animation: Animation<TextureAtlas.AtlasRegion> = Animation(0.25f, Assets.bomberTexture).apply { playMode = Animation.PlayMode.LOOP }
 
     /** Time since the animation has started. */
     private var stateTime = 0f

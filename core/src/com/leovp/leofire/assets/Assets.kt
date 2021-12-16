@@ -32,12 +32,12 @@ class Assets {
 
         lateinit var menuBg: Texture
         lateinit var gameBg: Texture
-        lateinit var bomberTexture: Array<TextureRegion>
+        lateinit var bomberTexture: com.badlogic.gdx.utils.Array<TextureAtlas.AtlasRegion>
         lateinit var bombTexture: Array<TextureRegion>
         lateinit var explosionTexture: Array<TextureRegion>
         lateinit var skyscraperTexture: Texture
-        lateinit var hudBomberTexture: Texture
-        lateinit var hudBombTexture: Texture
+        lateinit var hudBomberTexture: TextureRegion
+        lateinit var hudBombTexture: TextureRegion
 
         lateinit var music: Music
         lateinit var explosionSound: Sound
@@ -52,6 +52,8 @@ class Assets {
     }
 
     val manager = AssetManager()
+
+    val atlas: TextureAtlas = TextureAtlas(Gdx.files.internal("atlas_asset.atlas"))
 
 //    fun load() {
 //        playerWalkRunAtlas = loadAtlas("data/entity_1_walk_run.atlas.txt")
@@ -95,24 +97,24 @@ class Assets {
         // At this time, all the assets are only queued to be loaded. The AssetManager does not yet load anything.
         // To kick this off we have to call AssetManager.update() continuously to check whether all loading is finished.
         manager.load("gamebg.png", Texture::class.java)
-        manager.load("bomber.png", Texture::class.java)
+//        manager.load("bomber.png", Texture::class.java)
         manager.load("small_bomb.png", Texture::class.java)
         manager.load("skyscraper.png", Texture::class.java)
         manager.load("explosion.png", Texture::class.java)
-        manager.load("hud-bomber.png", Texture::class.java)
-        manager.load("hud-bomb.png", Texture::class.java)
+//        manager.load("hud-bomber.png", Texture::class.java)
+//        manager.load("hud-bomb.png", Texture::class.java)
         manager.load("explosion.mp3", Sound::class.java)
         manager.load("drop_bomb.mp3", Sound::class.java)
     }
 
     fun loadGameScreenAssets() {
         gameBg = manager.get("gamebg.png", Texture::class.java)
-        bomberTexture = TextureRegion.split(manager.get("bomber.png"), 104, 57)[0]
+        bomberTexture = atlas.findRegions("bomber")!!
         bombTexture = TextureRegion.split(manager.get("small_bomb.png"), 19, 10)[0]
         skyscraperTexture = manager.get("skyscraper.png", Texture::class.java)
         explosionTexture = TextureRegion.split(manager.get("explosion.png"), 128, 128)[0]
-        hudBomberTexture = manager.get("hud-bomber.png", Texture::class.java)
-        hudBombTexture = manager.get("hud-bomb.png", Texture::class.java)
+        hudBomberTexture = atlas.findRegion("hud-bomber")
+        hudBombTexture = atlas.findRegion("hud-bomb")
 //        explosionSound = Gdx.audio.newSound(Gdx.files.internal("explosion.mp3"))
 //        bombDrop = Gdx.audio.newSound(Gdx.files.internal("drop_bomb.mp3"))
         explosionSound = manager.get("explosion.mp3", Sound::class.java)

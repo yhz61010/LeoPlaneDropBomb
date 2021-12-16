@@ -1,0 +1,27 @@
+
+atlas_asset.png
+size: 128, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+bomber
+  rotate: false
+  xy: 2, 66
+  size: 104, 57
+  orig: 104, 57
+  offset: 0, 0
+  index: -1
+hud-bomber
+  rotate: false
+  xy: 2, 66
+  size: 104, 57
+  orig: 104, 57
+  offset: 0, 0
+  index: -1
+hud-bomb
+  rotate: false
+  xy: 2, 2
+  size: 31, 62
+  orig: 31, 62
+  offset: 0, 0
+  index: -1
